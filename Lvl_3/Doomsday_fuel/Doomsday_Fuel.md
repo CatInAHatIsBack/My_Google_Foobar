@@ -45,6 +45,8 @@ Input: Solution.solution({{0, 1, 0, 0, 0, 1}, {4, 0, 0, 3, 2, 0}, {0, 0, 0, 0, 0
 Output: [0, 3, 2, 9, 14]
 
 
+Help 
+=====
 If you are doing the challenge for yourself, and get stuck i would suggest you look into markov chains before you look at my solution.
 
-![image](https://user-images.githubusercontent.com/94614129/150168074-67f0c349-90e6-445d-a97a-c4f71af64a5a.png)
+![image](https://user-images.githubusercontent.com/94614129/150170148-a5801169-0e42-4f4f-a21a-846d06e7dcd1.png)
