@@ -1,5 +1,5 @@
-Doomsday Fuel
-=============
+Challenge name : Doomsday Fuel
+=================================
 
 Making fuel for the LAMBCHOP's reactor core is a tricky process because of the exotic matter involved. It starts as raw ore, then during processing, begins randomly changing between forms, eventually reaching a stable form. There may be multiple stable forms that a sample could ultimately reach, not all of which are useful as fuel. 
 
@@ -33,7 +33,6 @@ Languages
 =========
 
 To provide a Java solution, edit Solution.java
-To provide a Python solution, edit solution.py
 
 Test cases
 ==========
@@ -51,13 +50,4 @@ Solution.solution({{0, 1, 0, 0, 0, 1}, {4, 0, 0, 3, 2, 0}, {0, 0, 0, 0, 0, 0}, {
 Output:
     [0, 3, 2, 9, 14]
 
--- Python cases --
-Input:
-solution.solution([[0, 2, 1, 0, 0], [0, 0, 0, 3, 4], [0, 0, 0, 0, 0], [0, 0, 0, 0,0], [0, 0, 0, 0, 0]])
-Output:
-    [7, 6, 8, 21]
 
-Input:
-solution.solution([[0, 1, 0, 0, 0, 1], [4, 0, 0, 3, 2, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]])
-Output:
-    [0, 3, 2, 9, 14]
