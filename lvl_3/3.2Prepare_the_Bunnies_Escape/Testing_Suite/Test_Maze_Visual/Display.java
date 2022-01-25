@@ -1,4 +1,4 @@
-package Test_Maze_Visual;
+package Testing_Suite.Test_Maze_Visual;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 

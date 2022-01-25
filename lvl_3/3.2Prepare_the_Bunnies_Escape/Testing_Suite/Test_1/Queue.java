@@ -1,4 +1,4 @@
-package Build_Maze;
+package Testing_Suite.Test_1;
 
 
 public class Queue {

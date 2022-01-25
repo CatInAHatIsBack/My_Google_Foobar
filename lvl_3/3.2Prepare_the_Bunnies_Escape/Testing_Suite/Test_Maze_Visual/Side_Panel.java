@@ -1,4 +1,4 @@
-package Test_Maze_Visual;
+package Testing_Suite.Test_Maze_Visual;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 //import java.awt.BorderLayout;

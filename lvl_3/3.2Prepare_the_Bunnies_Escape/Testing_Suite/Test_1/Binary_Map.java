@@ -1,4 +1,4 @@
-package Build_Maze;
+package Testing_Suite.Test_1;
 
 import java.util.Random;
 

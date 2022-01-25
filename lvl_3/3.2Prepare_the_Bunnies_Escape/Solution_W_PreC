@@ -1,0 +1,432 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class Solution {
+
+    static Cell[][] grid; 
+    static Cell end;
+    static Cell start;
+    
+    static int row;
+    static int column;
+
+    static ArrayList<Cell> fin;
+    static ArrayList<Cell> finval;
+
+    static ArrayList<Cell> finDark;
+    static ArrayList<Cell> finvalDark;
+    
+    public static Map<Cell, Cell> solution; 
+    public static Queue upNext;
+
+    public static Map<Cell, Cell> solutionDark; 
+    public static Queue upNextDark;
+
+    static int finCount = 0;
+
+    static boolean isFound = false;
+    static int lightCount = 1;
+    static int darkCount = 0;
+    public static int solution(int[][] maze){
+        // row & col for modularity
+        row = maze.length;
+        column = maze[0].length;
+
+        
+        
+        
+        // list & and arrays
+        grid = new Cell[row][column];
+
+        fin = new ArrayList<Cell>();
+        finval = new ArrayList<Cell>();
+
+        finDark = new ArrayList<Cell>();
+        finvalDark = new ArrayList<Cell>();
+
+        solution = new HashMap<Cell, Cell>();
+        upNext = new Queue();
+
+        solutionDark = new HashMap<Cell, Cell>();
+        upNextDark = new Queue();
+
+        // init
+        // System.out.println("bef init");
+        init(maze);
+
+        // setting start and end cell
+        start = grid[0][0];
+        start.visitedByLightGray = true;
+        start.visitedByDarkGray = true;
+        start.isStart = true;
+        start.isPath = true; 
+
+        end = grid[row - 1][column - 1];
+        end.isEnd = true;
+
+        BFS();
+        printPath();
+        // System.out.println(finCount + " steps ");
+        return finCount;
+        // for (int i = 0; i < row ;i++) {
+        //     for (int j = 0; j < column; j++) {
+
+        //     } 
+        // }
+    }
+    static void printPath(){
+        for (int i = 0; i < row ;i++) {
+            for (int j = 0; j < column; j++) {
+                if(grid[i][j].isPath){
+                    int row = grid[i][j].i;
+                    int column = grid[i][j].j;
+                    // System.out.println(row + " : " + column);
+                    finCount++;
+                }
+            } 
+        }
+    }
+
+    // ==================== rules ===================//
+    static void BFS(){
+        Cell current = start;
+        upNext.add(start);
+        // could optimise a little with while confition, it will itterate over after it found solution
+        while(!isFound){
+            int num = lightCount;
+            lightCount = 0;
+            for(int i = 0; i < num; i++){
+                current = upNext.peek();
+                tick(current);
+                // System.out.println("light tick");
+            }
+            num = darkCount;
+            darkCount = 0;
+            if(!upNextDark.isEmpty()){
+                for(int i = 0; i < num; i++){
+                    current = upNextDark.peek();
+                    tickDark(current);
+                    // System.out.println("dark tick");
+                }
+            }
+        }
+        //if(current.visitedByDarkGray){
+        //    getSolutionDark(current);
+        //}
+        //else{
+        //    getSolution(current);
+        //}
+    }
+    static void tickDark(Cell current){
+        List<Cell> cross = getCross(current);
+        for (int i = 0; i < cross.size(); i++) {
+            evaluateDark(cross.get(i),current, i );
+            //System.out.println(cross.get(i) + " dark tick");
+        }
+        upNextDark.remove();
+    }
+    static void tick(Cell current){
+        List<Cell> cross = getCross(current);
+        for (int i = 0; i < cross.size(); i++) {
+            evaluate(cross.get(i),current, i);
+            //System.out.println(cross.get(i) + " light tick");
+        }
+        upNext.remove();
+    }
+    static void evaluate(Cell current, Cell previous, int i){
+            
+        if(current != null && !current.visitedByLightGray){
+            if(!current.isWall){
+                solution.put(current, previous);
+                upNext.add(current);
+                lightCount++;
+                current.visitedByLightGray = true;
+                if(current.isEnd){
+                    //  System.out.println(" ================ ");
+                    getSolution(current);
+                    return;
+                }
+            }
+            
+            if(current.isWall && 
+               !current.visitedByDarkGray){
+                   // add reference to current cell, last block in light Queue
+                    solution.put(current, previous);
+                    solutionDark.put(current, previous);
+                    upNextDark.add(current);
+                    darkCount++;
+                    current.visitedByDarkGray = true;
+                    //if(current.isEnd){
+                    ////  System.out.println(" ================ ");
+                    //    getSolution(current);
+                    //}   
+            }
+            
+        }
+        
+        
+    }
+    static void evaluateDark(Cell current, Cell previous, int i){
+        if(current != null && !current.visitedByLightGray && !current.visitedByDarkGray){
+            if(!current.isWall){
+                solutionDark.put(current, previous);
+                upNextDark.add(current);
+                darkCount++;
+                current.visitedByDarkGray = true;
+                if(current.isEnd){
+                    // System.out.println();
+                    // System.out.println("===================");
+                    // System.out.println("dark");
+                    getSolutionDark(current);
+                }
+
+            }
+        } 
+                      
+    }
+    private static void getSolutionDark(Cell current){
+        
+        isFound = true;
+        // get value of end in map 
+        // put value of ends prev in back in loop
+        // until value == start
+        current.isPath = true;
+        finDark.add(current);
+        finvalDark.add(solutionDark.get(current));
+
+        if(solutionDark.get(current).isWall){
+            //  System.out.println("dark sol");
+            // finCount++;
+            getSolution(solutionDark.get(current));
+            return;
+                // System.out.println(finDark.size() + " fin dark size"); 
+            //for( int i = 0; i < finDark.size(); i++){
+            //    // Cell key = finDark.get(i);
+            //    // Cell value = finvalDark.get(i);
+            //    // System.out.println("From : " + key.i + " : " + key.j + "  |  To " + value.i + " : " + value.j);
+            //}
+            // System.out.println();
+            // System.out.println("===================");
+            // System.out.println("fin dark");
+            // System.out.println();
+        }
+        else{
+            // System.out.println();
+            // System.out.println("===================");
+            // System.out.println("fin dark");
+            // System.out.println();
+            //current.isPath = true;
+            // finCount++;
+            getSolutionDark(solutionDark.get(current));
+        }
+         
+    }
+    private static void getSolution(Cell current){
+        isFound = true;
+        // get value of end in map 
+        // put value of ends prev in back in loop
+        // until value == start
+        current.isPath = true;
+        fin.add(current);
+        finval.add(solution.get(current));
+
+        if(solution.get(current) == start){
+            // System.out.println("light sol");
+                // System.out.println(finDark.size() + " fin dark size in light"); 
+                // System.out.println(fin.size() + " fin light size in light");
+                //finCount += finDark.size() + fin.size() + 1; 
+            return;     
+            //for( int i = 0; i < fin.size(); i++){
+            //    Cell key = fin.get(i);
+            //    Cell value = finval.get(i);
+            //    // System.out.println("From : " + key.i + " : " + key.j + "  |  To " + value.i + " : " + value.j);
+            //}
+            // System.out.println();
+            // System.out.println("===================");
+            // System.out.println("fin light");
+            // System.out.println();
+        }
+        else{
+            //current.isPath = true;
+            // finCount++;
+            // System.out.println();
+            // System.out.println("===================");
+            // System.out.println("light dark");
+            // System.out.println();
+            getSolution(solution.get(current));
+        }
+         
+    }
+    
+    // ==================== Cells around ============ //
+    static List<Cell> getCross(Cell current){
+
+        List<Cell> cross = new ArrayList<Cell>();
+
+        Cell up = up(current);
+            if(up != null){
+                cross.add(up);
+            }
+        Cell down = down(current);
+            if(down != null){
+                cross.add(down);
+            }
+        Cell left = left(current);
+            if(left != null){
+                cross.add(left);
+            }
+        Cell right = right(current);
+            if(right != null){
+                cross.add(right);
+            }
+        return cross;
+    }
+    // ====================== ^v<> ==============//
+    static Cell up(Cell current){
+        int i = current.i;
+        int j = current.j;
+        if(i == 0){
+            return null;
+        }
+        return grid[i - 1][j];
+    }
+    static Cell down(Cell current){
+        int i = current.i;
+        int j = current.j;
+        if(i == row - 1){
+            return null;
+        }
+        return grid[i + 1][j];
+    }
+    static Cell left(Cell current){
+        int i = current.i;
+        int j = current.j;
+        if(j == 0){
+            return null;
+        }
+        return grid[i][j - 1];
+    }
+    static Cell right(Cell current){
+        int i = current.i;
+        int j = current.j;
+        if(j == column - 1){
+            return null;
+        }
+        return grid[i][j + 1];
+    }
+    // ==================== init ===============//
+    static void init(int[][] maze) {
+        for (int i = 0; i < row ;i++) {
+            for (int j = 0; j < column; j++) {
+                grid[i][j] = new Cell(i,j);
+
+                // initialising grid and setting if wall or not
+                if(maze[i][j] == 0){
+                    grid[i][j].isWall = false;
+                }
+                else{
+                    grid[i][j].isWall = true;
+                }
+            } 
+        }
+    }
+    
+    // ====================================//
+    // ====================================//
+    // ====================================//
+    // ============== Cell ================//
+    static class Cell{
+
+        boolean isCurrent;
+        boolean isWall;
+        boolean isStart;
+        boolean isEnd;
+        boolean visitedByLightGray;
+        boolean visitedByDarkGray;
+        boolean isPath;
+        int i;
+        int j;
+
+        Cell(int i, int j){
+        this.i = i;
+        this.j = j;
+    }
+    }
+    // ====================================//
+    // ====================================//
+    // ====================================//
+    // ============ Queue =================//
+    static class Queue {
+
+        private static class Node {
+
+            Cell cell;
+            private Node next;
+
+            private Node (Cell cell){
+                this.cell = cell;
+            }
+        }
+        int len;
+        private Node head;
+        private Node tail;
+
+        public boolean isEmpty() {
+            return head == null;
+        }
+        public Cell peek(){
+            return head.cell;
+        }
+        public void add(Cell cell){
+            Node node = new Node(cell);
+            if(tail != null){
+                tail.next = node;
+            }
+            tail = node;
+            if(head == null){
+                head = node;
+            }
+        }
+        public Cell remove(){
+            Cell cell = head.cell;
+            head = head.next;
+            if(head == null){
+                tail = null;
+            }
+            return cell;
+        }
+    } 
+    // ====================================//
+    // ====================================//
+    // ====================================//
+    // ====================================//
+    public static void main(String[] args) {
+        int[][] maze = {
+            { 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 1, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 1, 1, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 1, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 1, 1, 1 },
+            { 0, 0, 1, 0, 0, 1, 1, 0, 0, 0 },
+            { 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 },
+            { 0, 1, 1, 1, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 1, 0, 1, 0, 1 },
+            { 0, 0, 1, 0, 1, 0, 0, 0, 1, 0 },
+        };
+        int[][] maze2 = {{0, 1, 1, 0},
+                         {0, 0, 0, 1},
+                         {1, 1, 0, 0},
+                         {1, 1, 1, 0}
+        };
+        int[][] maze3 = {{0, 0, 0, 0, 0, 0}, 
+                         {1, 1, 1, 1, 1, 0},
+                         {0, 0, 0, 0, 0, 0}, 
+                         {0, 1, 1, 1, 1, 1},
+                         {0, 1, 1, 1, 1, 1},
+                         {0, 0, 0, 0, 0, 0}
+        };
+        Solution.solution(maze);
+    }
+}

@@ -1,4 +1,4 @@
-package Build_Maze;
+package Testing_Suite.Test_1;
 
 
 public class Cell {
@@ -7,7 +7,9 @@ public class Cell {
     boolean isWall;
     boolean isStart;
     boolean isEnd;
-    boolean visited;
+    boolean visitedByLightGray;
+    boolean visitedByDarkGray;
+    boolean isPath;
     int i;
     int j;
 

@@ -1,7 +1,7 @@
-package Build_Maze;
+package Testing_Suite.Test_1;
 
 public class Maze_Solver {
-    int[][] maze = {
+    int[][] maze2 = {
             { 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 },
             { 0, 0, 0, 1, 0, 0, 0, 0, 0, 0 },
             { 0, 0, 1, 1, 0, 0, 0, 0, 0, 0 },
@@ -10,8 +10,15 @@ public class Maze_Solver {
             { 0, 0, 1, 0, 0, 1, 1, 0, 0, 0 },
             { 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 },
             { 0, 1, 1, 1, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 1, 0, 1, 0, 0 },
-            { 0, 0, 1, 0, 1, 0, 0, 0, 1, 1 },
+            { 0, 0, 0, 0, 0, 1, 0, 1, 0, 1 },
+            { 0, 0, 1, 0, 1, 0, 0, 0, 1, 0 },
+        };
+    int[][] maze = {{0, 0, 0, 0, 0, 0}, 
+                         {1, 1, 1, 1, 1, 0},
+                         {0, 0, 0, 0, 0, 0}, 
+                         {0, 1, 1, 1, 1, 1},
+                         {0, 1, 1, 1, 1, 1},
+                         {0, 0, 0, 0, 0, 0}
     };
     Cell[][] grid;
     int rows;
@@ -21,6 +28,7 @@ public class Maze_Solver {
     int end;
 
     Display_Maze display;
+
     Maze_Solver(){
         this.rows = maze.length;
         this.cols = maze[0].length;
@@ -30,9 +38,6 @@ public class Maze_Solver {
         printMaze();
         printToFrame();
         display = new Display_Maze(grid);
-    }
-    public void Solve(){
-
     }
     public void init(){
         // makes array of Cell class 

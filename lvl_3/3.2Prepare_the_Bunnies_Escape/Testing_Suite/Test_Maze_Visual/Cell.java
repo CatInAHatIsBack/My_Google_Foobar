@@ -1,4 +1,4 @@
-package Test_Maze_Visual;
+package Testing_Suite.Test_Maze_Visual;
 public class Cell {
     boolean wall;
     boolean isStart;

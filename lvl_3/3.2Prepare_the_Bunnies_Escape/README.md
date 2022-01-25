@@ -1,3 +1,6 @@
+                                                                                                                                                            !CUI
+
+
 There are a lot of difficult things about being undercover as Commander Lambda's personal assistant, but you have to say, the personal spa and private hot cocoa bar are pretty awesome.
 
 New challenge "Prepare the Bunnies' Escape" added to your home folder.
@@ -39,3 +42,97 @@ Input:  Solution.solution({ {0, 0, 0, 0, 0, 0},
                             {0, 1, 1, 1, 1, 1}, 
                             {0, 0, 0, 0, 0, 0}})
 Output: 11
+
+
+
+# Mine-
+
+##  == Basic map == 
+#### - Testing_Suite (coding ideas and notes)
+#####        - Test_1 (Up and running visual maze - code not cleaned)
+                    - contains visuals
+                    - random maze generator (Maze_Generator)
+                    - uncleaned solution
+#####        - Test_Maze_Visuals ( Testing basic Jpanel setup. Get it to Display a maze)
+
+#### - Theory (basic notes about Graph_Theory, BackTracking, and Pathfinding noes i took while reading up on mazes)
+#####        - BackTracking
+#####        - Graph_Theory
+#####        - Pathfinding
+
+
+
+# Plan 
+
+## - My Thoughts
+
+    
+    I considered solving this by Depth First Search (DFS),
+    but while reading up i started considering the possibility 
+    that doing (DFS) whith one removable wall would be :
+
+        1) Extreamly inefficient, although i am not entirely sure.
+        2) A Pain to both implement and work with.
+    
+    Thats why i went with Breath First Search (BFS) using a 
+    Queue(first in first out), and keep a seperate 
+    list for those that have already
+    passed through a wall .
+
+
+
+## How i plan to implement
+FIO = figure it out
+- Some of The values might be redundant but 
+is there for either clearity while coding, 
+or just part of a previous idea i had that i have not removed as of yet.
+
+    Make the Binary Array into a grid of Cells so we can store some data in each:    
+
+    - Cells
+        booleans : 
+            isCurrent (current cell in algo)
+            isWall (FIO)
+            isStart (FIO)
+            isEnd (FIO)
+            visitedByLightGray (light gray is before it passes through a wall)
+            visitedByDarkGray (dark gray is after it passes through a wall)
+            isPath (if cell is part of most eficcient)
+        int : 
+            i (what row it is in)
+            j (what column it is in)
+    - Queue
+        - node head
+        - node tail
+        - basic functionality
+    - Solver 
+        grid (Cell[][])
+        start and end pos
+            - Get (^v<>)
+            - If not null add to corresponding Queue
+                - Light (before going through wall)
+                - Dark (after going through wall)
+
+            - Add to corresponding solution HashMap Dictionary
+                - Used for backtracking through maze and finding path
+                    -       
+                         key0 : value0
+                         key1 : value1
+                         key2 : value2
+                         key3 : value3
+
+                        keyX-1 = valueX
+
+                        get value of key
+                        and put it back as value as key
+
+                !! However, this will be hard as neither map contains the
+                    full path if a wall is crossed.
+                    Thats why i scan every Cell when backtracking since if 
+                    the current backtracking cell is a wall, then i can send that value to the hashmap of the pre - walljump. That list will contain the fastest way to to 
+                    get to that specific Cell. Then add them together
+
+                
+
+
+
