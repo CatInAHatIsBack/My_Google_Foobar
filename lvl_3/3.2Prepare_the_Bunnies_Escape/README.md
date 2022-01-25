@@ -49,16 +49,16 @@ Output: 11
 
 ##  == Basic map == 
 #### - Testing_Suite (coding ideas and notes)
-#####        - Test_1 (Up and running visual maze - code not cleaned)
-                    - contains visuals
-                    - random maze generator (Maze_Generator)
-                    - uncleaned solution
+    - Test_1 (Up and running visual maze - code not cleaned)
+        - contains visuals
+        - random maze generator (Maze_Generator)
+        - uncleaned solution
 #####        - Test_Maze_Visuals ( Testing basic Jpanel setup. Get it to Display a maze)
 
 #### - Theory (basic notes about Graph_Theory, BackTracking, and Pathfinding noes i took while reading up on mazes)
-#####        - BackTracking
-#####        - Graph_Theory
-#####        - Pathfinding
+    - BackTracking
+    - Graph_Theory
+    - Pathfinding
 
 
 
