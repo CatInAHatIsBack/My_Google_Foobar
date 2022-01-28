@@ -1,0 +1,17 @@
+# Types of binary trees
+    - Full binary tree
+        - All exept leaf nodes have 2 children
+    - Complete binary tree
+        - All levels are completely filled exept last
+        - All keys as left as possible
+    - Perfect binary tree
+        - All nodes are full
+        - Leaf nodes are same lvl
+        - Num of leaf nodes is num of internal nodes + 1
+    - Balanced binary tree
+        - Height is O(log n) : n num of nodes
+        - Height of left and right subtrees of nodes differ in height by no more than 1
+    - Degenerate tree
+        - Nodes have one child each.
+        - Basically a linked list
+    -  
