@@ -49,7 +49,7 @@ Output:
     [1, 2]
 
 
-# Solution
+# Solution. Most of my work was done on paper
     - To solve i used the FloydWarshall algorithm (APSP)
     - Then Check how many bunnies you can pick up
     - Then just sort the array
