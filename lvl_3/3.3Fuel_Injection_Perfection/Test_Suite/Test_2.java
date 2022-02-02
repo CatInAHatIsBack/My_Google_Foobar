@@ -51,8 +51,6 @@ public class Test_2 {
             count++;
         }
         // 1
-
-        
         return count; 
     }
 
